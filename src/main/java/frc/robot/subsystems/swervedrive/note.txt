@@ -1,0 +1,28 @@
+i kinda have maybe an idea of this shit going on here? idk, i copied most of it
+it looks like there is a light of reading to be done of the swervelib.SwerveDrive class
+in fact reading the whole class is needed idk
+it just looked like i needed a bunch of getter functions for the weird commands to work (see my note there)
+i basically copied all of it what am i saying
+we need a lot of reading to do (elia that may just become soley you have a lot of reading to do)
+unless this just works tho, then we can worry about autos and fuckall later
+and if so we need to instead put our brain power into programming arms:
+    gains + pid + trapezoid
+    there is also motionmagic or magicmotion class that might make it easier
+do that first so that we have a controllable robot before looking into advanced swerve programming
+
+2 hours of bascially copying i stg this better just work
+it compiled so why shouldnt it?
+im tired and i need to convince mr eric that we cannot just "get away with mechanical without any cad/theoretical design"
+    my source, litterally every fucking year before that we have designed a robot
+    2025 BEST was shit
+    2024 FRC was shit, that thang was built for a swerve train not a tank drive so the geometry didnt work out
+        the ramp was way to steep for any amount of auton to be reliable beyond maybe a 2 note
+    and i can garuntee you luis would say 2023 and 2022 was shit (they looked awful ima be real)
+
+programming robots is not hard, elia is cracked, chatgpt is cracked, and so are the 50 people on discord that i will force elia to get help from
+who am i ranting to
+god im going to crash out
+let me do cad please i stg please
+
+fuck you eric
+and fuck the stupid fucking school network
