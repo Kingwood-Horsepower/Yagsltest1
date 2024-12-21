@@ -38,7 +38,7 @@ public class SwerveSubsystem extends SubsystemBase {
   
   
   public SwerveSubsystem(File directory) {
-    double maximumSpeed = Units.feetToMeters(4.5);
+    double maximumSpeed = Constants.MAX_SPEED;
     File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(),"swerve");
     try {
       swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
@@ -64,21 +64,26 @@ public class SwerveSubsystem extends SubsystemBase {
    * @param headingY     Heading Y to calculate angle of the joystick.
    * @return Drive command.
    */
-  public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier headingX,
-                              DoubleSupplier headingY)
+  public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, 
+                              DoubleSupplier headingX, DoubleSupplier headingY)
   {
-    return run(() -> {
+    return run(
+      () -> {
+        Translation2d scaledInputs = SwerveMath.scaleTranslation(
+          new Translation2d(translationX.getAsDouble(),translationY.getAsDouble()), 0.8
+        );
 
-      Translation2d scaledInputs = SwerveMath.scaleTranslation(new Translation2d(translationX.getAsDouble(),
-                                                                                 translationY.getAsDouble()), 0.8);
-
-      // Make the robot move
-      driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(scaledInputs.getX(), scaledInputs.getY(),
-                                                                      headingX.getAsDouble(),
-                                                                      headingY.getAsDouble(),
-                                                                      swerveDrive.getOdometryHeading().getRadians(),
-                                                                      swerveDrive.getMaximumChassisVelocity()));
-    });
+        // Make the robot move
+        driveFieldOriented(
+          swerveDrive.swerveController.getTargetSpeeds(
+          scaledInputs.getX(), scaledInputs.getY(),
+          headingX.getAsDouble(),
+          headingY.getAsDouble(),
+          swerveDrive.getOdometryHeading().getRadians(),
+          swerveDrive.getMaximumChassisVelocity()
+        ));
+      }
+    );
   }
 
   /**
@@ -89,24 +94,25 @@ public class SwerveSubsystem extends SubsystemBase {
    * @param angularRotationX Rotation of the robot to set
    * @return Drive command.
    */
-  public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX)
+  public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, 
+                              DoubleSupplier angularRotationX)
   {
-    return run(() -> {
-      // Make the robot move
-      swerveDrive.drive(new Translation2d(translationX.getAsDouble() * swerveDrive.getMaximumChassisVelocity(),
-                                          translationY.getAsDouble() * swerveDrive.getMaximumChassisVelocity()),
-                        angularRotationX.getAsDouble() * swerveDrive.getMaximumChassisAngularVelocity(),
-                        true,
-                        false);
+    return run(
+      () -> {
+        // Make the robot move
+        swerveDrive.drive(new Translation2d(
+          translationX.getAsDouble() * swerveDrive.getMaximumChassisVelocity(),
+          translationY.getAsDouble() * swerveDrive.getMaximumChassisVelocity()),
+        angularRotationX.getAsDouble() * swerveDrive.getMaximumChassisAngularVelocity(),
+        true,
+        false);
     });
   }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative)
   {
-    swerveDrive.drive(translation,
-                      rotation,
-                      fieldRelative,
-                      false); // Open loop is disabled since it shouldn't be used most of the time.
+    swerveDrive.drive(translation, rotation, fieldRelative, false); 
+    // Open loop is disabled since it shouldn't be used most of the time.
   }
 
   /**
